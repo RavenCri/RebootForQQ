@@ -1,7 +1,10 @@
 from nonebot import on_command, CommandSession
 import requests
 
-
+__plugin_name__ = '开通xsd码的插件功能'
+__plugin_usage__ = r"""
+发送 '开通插件权限  xsd码' 或者 '开权限 xsd码' 即可
+""".strip()
 async def getplungeAuth(xsdId,qqNum) -> str:
       
       url = "http://raven520.top/openPower?key=vrHvaWTZ7JBxMYci&xsd="+xsdId

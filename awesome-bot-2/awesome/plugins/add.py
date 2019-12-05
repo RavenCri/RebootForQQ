@@ -2,6 +2,10 @@ from nonebot import on_command, CommandSession
 import requests
 import pyperclip,nonebot
 from awesome.plugins.token import myQQs,qqList
+__plugin_name__ = '添加获取密令权限'
+__plugin_usage__ = r"""
+发送 add qq号码 即可
+""".strip()
 async def addQQ(qqNum,qqId) -> str:
    
   

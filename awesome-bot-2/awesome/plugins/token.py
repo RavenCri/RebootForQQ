@@ -4,7 +4,10 @@ import pyperclip,nonebot
 
 myQQs = [2109241,857697474]
 qqList = [2109241,857697474]
-
+__plugin_name__ = '获取密令'
+__plugin_usage__ = r"""
+发送 1\token\获取token\密令 四者中的任意一个即可获取体育在线考试的密令
+""".strip()
 # on_command 装饰器将函数声明为一个命令处理器
 
 @on_command('token', aliases=('1', 'token', '获取token','密令'))
