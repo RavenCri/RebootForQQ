@@ -3,9 +3,9 @@ import requests
 import pyperclip,nonebot
 from awesome.plugins.token import myQQs,qqList
 from awesome.plugins.select import getCurrQQList
-__plugin_name__ = '添加获取密令权限'
+__plugin_name__ = 'add'
 __plugin_usage__ = r"""
-发送 add qq号码 即可
+添加获取密令权限，发送 add qq号码 即可
 """.strip()
 async def addQQ(qqNum,qqId) -> str:
    

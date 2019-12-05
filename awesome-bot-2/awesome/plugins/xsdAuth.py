@@ -1,9 +1,9 @@
 from nonebot import on_command, CommandSession
 import requests
 
-__plugin_name__ = '开通xsd码的插件功能'
+__plugin_name__ = 'xsdplus'
 __plugin_usage__ = r"""
-发送 '开通插件权限  xsd码' 或者 '开权限 xsd码' 即可
+开通xsd码的插件功能,发送 '开权限  xsd码' 或者 'xsdplus xsd码' 即可
 """.strip()
 async def getplungeAuth(xsdId,qqNum) -> str:
       
@@ -15,7 +15,7 @@ async def getplungeAuth(xsdId,qqNum) -> str:
 # on_command 装饰器将函数声明为一个命令处理器
 
 
-@on_command('plunge', aliases=('开通插件权限', '开权限'))
+@on_command('plunge', aliases=('xsdplus', '开权限'))
 async def plunge(session: CommandSession):
    
     xsdId = session.get('xsd', prompt='您想给哪个插件开通权限呢？')
