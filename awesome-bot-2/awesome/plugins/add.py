@@ -1,25 +1,27 @@
 from nonebot import on_command, CommandSession
 import requests
 import pyperclip,nonebot
-from awesome.plugins.token import myQQs,qqList
-from awesome.plugins.select import getCurrQQList
+from awesome.plugins.token import myQQs,qqTokeNumChange
+from awesome.plugins.select import getCurrQQList,getQQTokenNum
+import sqlite3
 __plugin_name__ = 'add'
 __plugin_usage__ = r"""
 添加获取密令权限，发送 add qq号码 即可
 """.strip()
 async def addQQ(qqNum,qqId) -> str:
    
-  
+   
     if qqNum in myQQs:
         try:
             qqId = qqId.replace(" ", "")
             if qqId.find("*")  > 0:
                 qqInfo =  qqId.split("*")
-                for i in range(int(qqInfo[1])):
-                    qqList.append( int(qqInfo[0]))
+            
+                addQQgetTokenNum(qqInfo[0],int(qqInfo[1]))
             else:
-                qqList.append( int(qqId))
-            msg = getCurrQQList()
+               
+                 addQQgetTokenNum(qqId,1)
+            msg = getCurrQQList(getQQTokenNum())
             #return "添加成功！当前可用列表："+(",".join('%s' %id for id in qqList))
             return "添加成功！当前可用列表：\n"+msg
         except (ValueError):
@@ -46,8 +48,7 @@ async def _(session: CommandSession):
     if session.is_first_run:
         # 该命令第一次运行（第一次进入命令会话）
         if stripped_arg:
-            # 第一次运行参数不为空，意味着用户直接将城市名跟在命令名后面，作为参数传入
-            # 例如用户可能发送了：天气 南京
+         
             session.state['qq'] = stripped_arg
         return
 
@@ -56,4 +57,19 @@ async def _(session: CommandSession):
 
     session.state[session.current_key] = stripped_arg
 
-
+# 添加QQ
+def addQQgetTokenNum(QQNum,num):
+    conn = sqlite3.connect('C:/Users/raven/Desktop/reboot/test.db')
+    #创建一个cursor：
+    cursor = conn.cursor()
+    #如果QQ 已经存在数据表中
+    if QQNum in getQQTokenNum():
+        # 次数 改变 为原有次数 + 要增加的次数
+        qqTokeNumChange(QQNum,getQQTokenNum().get(QQNum)+num)
+        return
+    cursor.execute('insert into token (QQNum, num) values (\''+QQNum+'\','+str(num)+')')
+    cursor.close()
+     #提交事务：
+    conn.commit()
+    #关闭connection：
+    conn.close()

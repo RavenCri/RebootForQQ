@@ -1,6 +1,6 @@
 from nonebot import on_command, CommandSession
 import requests
-
+from awesome.plugins.token import myQQs
 __plugin_name__ = 'xsdplus'
 __plugin_usage__ = r"""
 开通xsd码的插件功能,发送 '开权限  xsd码' 或者 'xsdplus xsd码' 即可
@@ -8,11 +8,12 @@ __plugin_usage__ = r"""
 async def getplungeAuth(xsdId,qqNum) -> str:
       
       url = "http://raven520.top/openPower?key=vrHvaWTZ7JBxMYci&xsd="+xsdId
-      if qqNum == 2109241 or qqNum == 857697474:
+      if qqNum  in myQQs:
           return requests.session().get(url).text
       else:
           return "你没有权限执行相关操作！"
 # on_command 装饰器将函数声明为一个命令处理器
+
 
 
 @on_command('plunge', aliases=('xsdplus', '开权限'))
