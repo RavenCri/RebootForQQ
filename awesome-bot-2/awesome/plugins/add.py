@@ -14,19 +14,13 @@ async def addQQ(qqNum,qqId) -> str:
    
     if qqNum in myQQs:
         try:
-            qqId = qqId.replace(" ", "")
-            if qqId.find("*")  > 0 and qqId.find(",") < 0:
-                qqInfo =  qqId.split("*")
-                addQQgetTokenNum(qqInfo[0],int(qqInfo[1]))
-            elif qqId.find(",")  > 0:
-                qqInfo =  qqId.split(",")
-                for i in qqInfo:
-                    logger.info(i)
-                    num =    int(i.split("*")[1]) if len(i.split("*")) >1  else 1
-                    addQQgetTokenNum(i.split("*")[0],num)
-            else:
-               
-                 addQQgetTokenNum(qqId,1)
+           
+            qqInfo =  qqId.split(",")
+            for i in qqInfo:
+                logger.info(i)
+                num =    int(i.split("*")[1]) if len(i.split("*")) >1  else 1
+                addQQgetTokenNum(i.split("*")[0],num)
+        
             msg = getCurrQQList(getQQTokenNum())
             #return "添加成功！当前可用列表："+(",".join('%s' %id for id in qqList))
             return "添加成功！当前可用列表：\n"+msg
