@@ -4,6 +4,7 @@ import pyperclip,nonebot
 from awesome.plugins.token import myQQs,qqTokeNumChange
 from awesome.plugins.select import getCurrQQList,getQQTokenNum
 import sqlite3
+from nonebot.log import logger
 __plugin_name__ = 'add'
 __plugin_usage__ = r"""
 添加获取密令权限，发送 add qq号码 即可
@@ -14,10 +15,15 @@ async def addQQ(qqNum,qqId) -> str:
     if qqNum in myQQs:
         try:
             qqId = qqId.replace(" ", "")
-            if qqId.find("*")  > 0:
+            if qqId.find("*")  > 0 and qqId.find(",") < 0:
                 qqInfo =  qqId.split("*")
-            
                 addQQgetTokenNum(qqInfo[0],int(qqInfo[1]))
+            elif qqId.find(",")  > 0:
+                qqInfo =  qqId.split(",")
+                for i in qqInfo:
+                    logger.info(i)
+                    num =    int(i.split("*")[1]) if len(i.split("*")) >1  else 1
+                    addQQgetTokenNum(i.split("*")[0],num)
             else:
                
                  addQQgetTokenNum(qqId,1)
