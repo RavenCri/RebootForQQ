@@ -69,7 +69,5 @@ def addQQgetTokenNum(QQNum,num):
         return
     cursor.execute('insert into token (QQNum, num) values (\''+QQNum+'\','+str(num)+')')
     cursor.close()
-     #提交事务：
     conn.commit()
-    #关闭connection：
     conn.close()

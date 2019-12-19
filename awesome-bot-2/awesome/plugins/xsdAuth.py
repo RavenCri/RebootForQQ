@@ -34,8 +34,8 @@ async def _(session: CommandSession):
     if session.is_first_run:
         # 该命令第一次运行（第一次进入命令会话）
         if stripped_arg:
-            # 第一次运行参数不为空，意味着用户直接将城市名跟在命令名后面，作为参数传入
-            # 例如用户可能发送了：天气 南京
+            # 第一次运行参数不为空，意味着用户直接将xsd吗跟在命令名后面，作为参数传入
+            # 例如用户可能发送了：xsdplus  xxx
             session.state['xsd'] = stripped_arg
         return
 
