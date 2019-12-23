@@ -22,7 +22,7 @@ async def addQQ(qqNum,qqId) -> str:
                     continue
                 try:
                     int(i.split("*")[0])#判断是不是数字
-                    if len(i.split("*")[0])>1:#判断增加次数是不是数字
+                    if len(i.split("*"))>1:#判断增加次数是不是数字
                         int(i.split("*")[1])
                 except ValueError as identifier:
                     continue
