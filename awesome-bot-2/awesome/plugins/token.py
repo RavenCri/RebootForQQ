@@ -35,7 +35,10 @@ async def getToken(qqNum) -> str:
         session = requests.session()
         auth = "9h6BGD624a273gm2FOJeeDeY5jKB7b5NR6b1LR75adQleqg8gfE8vyBq3abXY1eV090u5n6fR5RefEFyZ3jZH820NtuDc4HZ9Isz63IeDv6dPA0FeHU3P0TJ15O9mzf4d00ffMeaX8qvS2i8U3CX7Df9r5x00Fn2UJT3Q1btEa4X0kiy1c0L2P0ao4LB0J1RB17cJf6O17e84rc8M9pbcvuu01d2N1R6aW1FBMVS20c6A6cs5C586Tlc2dJFGxsB"
         resp = session.get("http://raven520.top/getToken?auth="+auth)
-        res =  "点击该链接，输入您的学号和身份证后六位登录即可。请用浏览器打开该链接。"+resp.text+" \n温馨提示：直接点击该私密链接不需要您输入密令（需浏览器里打开！），系统会帮你填好密令。如果提示服务链接失败，请您刷新页面！，ps:直接登录该网站即可满分，无需校园网。"
+        if resp.status_code == 200:
+            res =  "点击该链接，输入您的学号和身份证后六位登录即可。请用浏览器打开该链接。"+resp.text+" \n温馨提示：直接点击该私密链接不需要您输入密令（需浏览器里打开！），系统会帮你填好密令。如果提示服务链接失败，请您刷新页面！，ps:直接登录该网站即可满分，无需校园网。"
+        else:
+            res = "当前访问过于频繁，请稍后再试！"
         pyperclip.copy(res)
         # 如果获取的QQ不是我的QQ
         if qqNum not in myQQs:

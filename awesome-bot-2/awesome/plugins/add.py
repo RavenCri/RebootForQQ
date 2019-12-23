@@ -16,7 +16,17 @@ async def addQQ(qqNum,qqId) -> str:
         try:
            
             qqInfo =  qqId.split(",")
+          
             for i in qqInfo:
+                if i == "":
+                    continue
+                try:
+                    int(i.split("*")[0])#判断是不是数字
+                    if len(i.split("*")[0])>1:#判断增加次数是不是数字
+                        int(i.split("*")[1])
+                except ValueError as identifier:
+                    continue
+
                 logger.info(i)
                 num =    int(i.split("*")[1]) if len(i.split("*")) >1  else 1
                 addQQgetTokenNum(i.split("*")[0],num)
