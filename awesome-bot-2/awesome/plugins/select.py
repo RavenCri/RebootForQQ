@@ -1,5 +1,6 @@
 from nonebot import on_command, CommandSession
 from awesome.plugins.token import myQQs
+from awesome.plugins.util.dao import getQQList
 import sqlite3
 __plugin_name__ = 'select'
 __plugin_usage__ = r"""
@@ -14,7 +15,7 @@ async def select(session: CommandSession):
     # 获取当前发送消息的QQ
     qqNum = session.ctx["user_id"]
     # 获取可用列表
-    qqList = getQQTokenNum()
+    qqList = getQQList()
     # 转换为要发送的消息
     msg = getCurrQQList(qqList)
     if msg == "":
@@ -32,19 +33,3 @@ def getCurrQQList(qqList):
      
    return msg
 
-# 获取所有QQ的可用次数
-def getQQTokenNum():
-   qqList = {}
-   conn = sqlite3.connect('C:/Users/raven/Desktop/reboot/test.db')
-   cursor = conn.cursor()
-  
-   c =  cursor.execute('select QQNum, num from token')
-   
-   for row in c:
-      qqList[row[0]] =int(row[1])
-   cursor.close()
-   #提交事务：
-   conn.commit()
-   #关闭connection：
-   conn.close()
-   return qqList

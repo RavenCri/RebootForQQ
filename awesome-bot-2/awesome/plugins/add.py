@@ -1,8 +1,9 @@
 from nonebot import on_command, CommandSession
 import requests
 import pyperclip,nonebot
-from awesome.plugins.token import myQQs,qqTokeNumChange
-from awesome.plugins.select import getCurrQQList,getQQTokenNum
+from awesome.plugins.token import myQQs
+from awesome.plugins.select import getCurrQQList
+from awesome.plugins.util.dao import getQQList,addQQUsedNum
 import sqlite3
 from nonebot.log import logger
 __plugin_name__ = 'add'
@@ -29,9 +30,9 @@ async def addQQ(qqNum,qqId) -> str:
 
                 logger.info(i)
                 num =    int(i.split("*")[1]) if len(i.split("*")) >1  else 1
-                addQQgetTokenNum(i.split("*")[0],num)
+                addQQUsedNum(i.split("*")[0],num)
         
-            msg = getCurrQQList(getQQTokenNum())
+            msg = getCurrQQList(getQQList())
             #return "添加成功！当前可用列表："+(",".join('%s' %id for id in qqList))
             return "添加成功！当前可用列表：\n"+msg
         except (ValueError):
@@ -47,8 +48,8 @@ async def addQQ(qqNum,qqId) -> str:
 async def add(session: CommandSession):
     qqId = session.get('qq', prompt='您想给哪个QQ添加获取密令的权限呢？')
     qqNum = session.ctx["user_id"]
-    weather_report = await addQQ(qqNum,qqId)
-    await session.send(weather_report)
+    msg_report = await addQQ(qqNum,qqId)
+    await session.send(msg_report)
     
 @add.args_parser
 async def _(session: CommandSession):
@@ -67,17 +68,4 @@ async def _(session: CommandSession):
 
     session.state[session.current_key] = stripped_arg
 
-# 添加QQ
-def addQQgetTokenNum(QQNum,num):
-    conn = sqlite3.connect('C:/Users/raven/Desktop/reboot/test.db')
-    #创建一个cursor：
-    cursor = conn.cursor()
-    #如果QQ 已经存在数据表中
-    if QQNum in getQQTokenNum():
-        # 次数 改变 为原有次数 + 要增加的次数
-        qqTokeNumChange(QQNum,getQQTokenNum().get(QQNum)+num)
-        return
-    cursor.execute('insert into token (QQNum, num) values (\''+QQNum+'\','+str(num)+')')
-    cursor.close()
-    conn.commit()
-    conn.close()
+
