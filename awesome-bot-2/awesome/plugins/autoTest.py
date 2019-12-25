@@ -4,8 +4,11 @@ import pyperclip,nonebot
 from awesome.plugins.util.dao import selectNumByQQId,updateNum
 from awesome.plugins.token import myQQs
 from awesome.plugins.util.httpUtil import httpGet,httpPost
-
-@on_command('autoTest', aliases=('体考',))
+__plugin_name__ = '体考'
+__plugin_usage__ = r"""
+可以进行体育考试，只需要向我发送 'test 学号 密码' 即可
+""".strip()
+@on_command('autoTest', aliases=('体考','test'))
 async def autoTest(session: CommandSession):
     msg = session.get('msgInfo', prompt='请输入学号和密码（ps:学号和密码用空格分隔开，密码为身份证后6位）')
     qqNum = session.ctx["user_id"]
