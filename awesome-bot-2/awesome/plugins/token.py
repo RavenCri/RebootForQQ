@@ -41,13 +41,13 @@ async def getToken(qqNum,st) -> (str,int):
             lastStr = ''
             if st.find('0')>=0:
                 appendStr = '&type=0'
-                tipStr = "点击该链接，输入您的账号(手机号)和密码登录即可。"
-                lastStr = '请您先再易班试对了账号密码再在我的网站登录，不然后台登不进去！！谢谢配合~'
+                tipStr = "点击该链接，输入您的易班账号(手机号)和密码登录即可。"
+                lastStr = '请您先在易班试对了账号密码再在我的网站登录，不然后台登不进去！！谢谢配合~'
             elif st.find('1')>=0:
                 appendStr = '&type=1'
                 tipStr = "点击该链接，输入您的学号和身份证后六位登录即可。"
                 lastStr = '直接登录该网站即可满分，无需校园网。'
-            res =  tipStr+"请用浏览器打开该链接。http://raven520.top/sport?token="+resp.text+appendStr+" \n温馨提示：直接点击该私密链接登录即可获取分数。如果提示服务链接失败，请您刷新页面！\nps："+lastStr
+            res =  tipStr+"请用浏览器打开该链接。http://raven520.top/sport?token="+resp.text+appendStr+" \n温馨提示：直接点击该私密链接登录即可(后台会自动帮您完成考试)。如果提示服务链接失败，请您刷新页面！\nps："+lastStr
             # 如果获取的QQ不是我的QQ
             if qqNum not in myQQs:
                 #那么设置他的可用次数 -1
