@@ -6,11 +6,11 @@ __plugin_name__ = 'xsdplus'
 __plugin_usage__ = r"""
 开通xsd码的插件功能,发送 '开权限  xsd码' 或者 'xsdplus xsd码' 即可
 """.strip()
-async def getplungeAuth(xsdId,qqNum) -> str:
+async def getplungeAuth(session,xsdId,qqNum) -> str:
       
      
       if qqNum  in myQQs:
-          return httpGet("http://raven520.top/openPower?key=vrHvaWTZ7JBxMYci&xsd="+xsdId).text
+          return httpGet(session.bot.config.localhost+"/openPower?key=vrHvaWTZ7JBxMYci&xsd="+xsdId).text
       else:
           return "你没有权限执行相关操作！"
 # on_command 装饰器将函数声明为一个命令处理器
@@ -22,7 +22,7 @@ async def plunge(session: CommandSession):
    
     xsdId = session.get('xsd', prompt='您想给哪个插件开通权限呢？')
     qqNum = session.ctx["user_id"]
-    msg_report = await getplungeAuth(xsdId,qqNum)
+    msg_report = await getplungeAuth(session,xsdId,qqNum)
     
     await session.send(msg_report)
    

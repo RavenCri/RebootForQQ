@@ -21,20 +21,20 @@ async def token(session: CommandSession):
    
     qqNum = session.ctx["user_id"]
     msg = session.ctx['message'].extract_plain_text()
-    senStr,useNum = await getToken(qqNum,msg)
+    senStr,useNum = await getToken(session,qqNum,msg)
     await session.send(senStr)
     if useNum is not None:
         bot = nonebot.get_bot()
         await bot.send_private_msg(user_id=2109241, message=("<%s>刚刚获取了一次体育在线测试的Token,他还可以获取：%d 次" %(qqNum,useNum)))
 # 获取token  
-async def getToken(qqNum,st) -> (str,int):
+async def getToken(session,qqNum,st) -> (str,int):
     
     useNum = selectNumByQQId(qqNum)
    
     if (useNum is not None and useNum > 0 ) or qqNum in myQQs:
        
         auth = "9h6BGD624a273gm2FOJeeDeY5jKB7b5NR6b1LR75adQleqg8gfE8vyBq3abXY1eV090u5n6fR5RefEFyZ3jZH820NtuDc4HZ9Isz63IeDv6dPA0FeHU3P0TJ15O9mzf4d00ffMeaX8qvS2i8U3CX7Df9r5x00Fn2UJT3Q1btEa4X0kiy1c0L2P0ao4LB0J1RB17cJf6O17e84rc8M9pbcvuu01d2N1R6aW1FBMVS20c6A6cs5C586Tlc2dJFGxsB"
-        resp = httpGet("http://raven520.top/getToken?auth="+auth)
+        resp = httpGet(session.bot.config.localhost+"/getToken?auth="+auth)
         if resp.status_code == 200:
             appendStr =''
             tipStr = ''
@@ -47,7 +47,7 @@ async def getToken(qqNum,st) -> (str,int):
                 appendStr = '&type=1'
                 tipStr = "点击该链接，输入您的学号和身份证后六位登录即可。"
                 lastStr = '直接登录该网站即可满分，无需校园网。'
-            res =  tipStr+"请用浏览器打开该链接。http://raven520.top/sport?token="+resp.text+appendStr+" \n温馨提示：直接点击该私密链接登录即可(后台会自动帮您完成考试)。如果提示服务链接失败，请您刷新页面！\nps："+lastStr
+            res =  tipStr+"请用浏览器打开该链接。"+session.bot.config.localhost+"/sport?token="+resp.text+appendStr+" \n温馨提示：直接点击该私密链接登录即可(后台会自动帮您完成考试)。如果提示服务链接失败，请您刷新页面！\nps："+lastStr
             # 如果获取的QQ不是我的QQ
             if qqNum not in myQQs:
                 #那么设置他的可用次数 -1
@@ -61,7 +61,7 @@ async def getToken(qqNum,st) -> (str,int):
         return res,useNum
     else:
 
-        return "您还没有权限获取密令呢~,如果您需要体育在线答题密令,请联系管理员<衣服架子>,成功转账之后再与我联系,向我 发送 密令 即可。",None
+        return "您还没有权限获取密令呢~,如果您需要体育在线答题密令,请联系管理员QQ：<2109241>,成功转账之后再与我联系,向我 发送 密令 即可。",None
 
 
  

@@ -21,9 +21,9 @@ async def autoTest(session: CommandSession):
             sendMsg = "账号密码格式不正确！"
         else:
             auth = "9h6BGD624a273gm2FOJeeDeY5jKB7b5NR6b1LR75adQleqg8gfE8vyBq3abXY1eV090u5n6fR5RefEFyZ3jZH820NtuDc4HZ9Isz63IeDv6dPA0FeHU3P0TJ15O9mzf4d00ffMeaX8qvS2i8U3CX7Df9r5x00Fn2UJT3Q1btEa4X0kiy1c0L2P0ao4LB0J1RB17cJf6O17e84rc8M9pbcvuu01d2N1R6aW1FBMVS20c6A6cs5C586Tlc2dJFGxsB"
-            resp = httpGet("http://raven520.top/getToken?auth="+auth)
+            resp = httpGet(session.bot.config.localhost+"/getToken?auth="+auth)
             data = {"username":msgsplit[0],"password":msgsplit[1],"token":resp.text}
-            sendMsg = httpPost("http://raven520.top/sportfull",data).json()['msg']
+            sendMsg = httpPost(session.bot.config.localhost+"/sportfull",data).json()['msg']
             if sendMsg.find("请自行登录公体部查询确认") > 0:
                 updateNum(qqNum,useNum-1)
 
